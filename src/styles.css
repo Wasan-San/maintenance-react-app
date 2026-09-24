@@ -33,9 +33,22 @@ body{
   font-family:"Inter","Noto Sans Thai",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   color:var(--text);
   background:
-    radial-gradient(circle at 88% 8%, rgba(167,179,255,.28), transparent 28%),
-    radial-gradient(circle at 10% 18%, rgba(158,220,255,.22), transparent 25%),
-    linear-gradient(150deg,#fbfdff 0%,#f6f9ff 48%,#f8f7ff 100%);
+    radial-gradient(
+        circle at 12% 18%,
+        rgba(125, 170, 255, 0.14),
+        transparent 18%
+    ),
+    radial-gradient(
+        circle at 88% 28%,
+        rgba(185, 165, 255, 0.12),
+        transparent 20%
+    ),
+    radial-gradient(
+        circle at 72% 88%,
+        rgba(145, 220, 205, 0.10),
+        transparent 18%
+    ),
+    #ffffff;
   min-height:100vh;
 }
 body::before{
@@ -1437,3 +1450,69 @@ main.shell{
 .confirm-modal.open{display:flex}
 .photo-lightbox.open{display:flex}
 tbody tr{cursor:pointer}
+
+
+/* =========================================================
+   V10 · Minimal Frosted Background
+   White base + a few soft abstract color spots
+   ========================================================= */
+
+/* 1. White base */
+html {
+  background: #ffffff;
+}
+
+body {
+  background:
+    /* Blue spot — top left */
+    radial-gradient(
+      circle at 8% 18%,
+      rgba(136, 196, 245, 0.38) 0%,
+      rgba(144, 198, 211, 0.22) 10%,
+      rgba(130, 165, 255, 0.10) 22%,
+      transparent 34%
+    ),
+
+    /* Purple / green spot — top right */
+    radial-gradient(
+      circle at 91% 22%,
+      rgba(161, 230, 144, 0.3) 2%,
+      rgba(167, 216, 183, 0.18) 11%,
+      rgba(200, 175, 255, 0.08) 22%,
+      transparent 34%
+    ),
+
+    /* Soft blue spot — bottom */
+    radial-gradient(
+      circle at 68% 92%,
+      rgba(95, 185, 255, 0.25) 0%,
+      rgba(115, 195, 255, 0.13) 12%,
+      transparent 30%
+    ),
+
+    #ffffff;
+}
+
+/* 2. Remove old flowing PNG artwork */
+.background-art-top,
+.background-art-bottom {
+  display: none !important;
+}
+
+/* 3. Remove old pseudo background artwork */
+body::before,
+body::after {
+  display: none !important;
+}
+
+/* 4. Keep cards soft / frosted */
+.card,
+.analysis-card,
+.form-card,
+.side-card,
+.database-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
