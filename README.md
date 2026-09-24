@@ -1,6 +1,7 @@
 # Workscape Maintenance — React Migration V1
 
 This is the React version of the original Vanilla JS maintenance prototype.
+Built as a learning project for React, Git, GitHub, and web deployment.
 
 ## What changed
 
