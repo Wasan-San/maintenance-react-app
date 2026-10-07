@@ -1,4 +1,4 @@
-export default function Layout({ page, onNavigate, children }) {
+export default function Layout({ page, onNavigate, profile, userEmail, onLogout, children }) {
   const go = (target) => (event) => {
     event.preventDefault();
     onNavigate(target);
@@ -7,8 +7,11 @@ export default function Layout({ page, onNavigate, children }) {
   const descriptions = {
     overview: 'Track maintenance activity, categories, and cost at a glance.',
     new: 'Submit a new maintenance request.',
-    database: 'View, track, and manage maintenance requests.'
+    database: 'View and track maintenance requests.'
   };
+
+  const displayName = profile?.displayName || userEmail || 'User';
+  const initial = displayName.trim().charAt(0).toUpperCase() || 'U';
 
   return (
     <>
@@ -33,15 +36,25 @@ export default function Layout({ page, onNavigate, children }) {
             <a href="#new" onClick={go('new')}>New Request</a>
             <a href="#">Expense</a>
           </nav>
-          <div className="user">
-            <div className="avatar">W</div><span>Wasan Sa.</span><span aria-hidden="true">⌄</span>
+          <div className="user auth-user">
+            <div className="avatar">{initial}</div>
+            <div className="auth-user-copy">
+              <span>{displayName}</span>
+              <small>{profile?.role || 'loading role'}</small>
+            </div>
+            <button className="btn logout-btn" type="button" onClick={onLogout}>Logout</button>
           </div>
         </div>
       </header>
 
       <section className="page-head shell">
-        <h1>Maintenance</h1>
-        <p>{descriptions[page]}</p>
+        <div className="page-head-row">
+          <div>
+            <h1>Maintenance</h1>
+            <p>{descriptions[page]}</p>
+          </div>
+          {profile?.role && <span className={`role-badge role-${profile.role}`}>{profile.role}</span>}
+        </div>
         <nav className="subnav" aria-label="Maintenance navigation">
           <a href="#overview" onClick={go('overview')} className={page === 'overview' ? 'active' : ''}>Overview</a>
           <a href="#new" onClick={go('new')} className={page === 'new' ? 'active' : ''}>New Request</a>
