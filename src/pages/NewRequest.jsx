@@ -116,7 +116,15 @@ export default function NewRequest({ stores, profile, userEmail, onAddRequest, o
     try {
       setSubmitting(true);
       const created = await onAddRequest(request);
-      showToast(`${created.urgent ? 'URGENT · ' : ''}${created.workCode} submitted successfully.`);
+            if (created.photoUploadError) {
+        showToast(
+          `${created.workCode} saved, but photos failed to upload. Please open the request and add photos again. (${created.photoUploadError})`,
+          'error',
+          8000
+        );
+      } else {
+        showToast(`${created.urgent ? 'URGENT · ' : ''}${created.workCode} submitted successfully.`);
+      }
       photos.forEach((photo) => URL.revokeObjectURL(photo.preview));
       setPhotos([]);
       setForm(makeEmptyForm(userEmail));

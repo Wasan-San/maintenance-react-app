@@ -598,7 +598,7 @@ function RequestModal({
               <div className="placeholder">
                 {formatDateTime(request.lastUpdate)}
                 <br />
-                By Admin
+                By {request.history?.at(-1)?.by || '—'}
               </div>
             </section>
           </aside>

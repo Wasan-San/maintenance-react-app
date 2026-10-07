@@ -160,17 +160,26 @@ export async function createRequestRecord(request) {
 
   if (error) throw error;
 
+  let photoUploadError = null;
+
   if (request.reportedPhotos?.length) {
-    await uploadTicketPhotos({
-      ticketId: data.ticket_id,
-      storeId: data.store_id,
-      photos: request.reportedPhotos,
-      photoType: 'reported',
-      stage: 'Reported'
-    });
+    try {
+      await uploadTicketPhotos({
+        ticketId: data.ticket_id,
+        storeId: data.store_id,
+        photos: request.reportedPhotos,
+        photoType: 'reported',
+        stage: 'Reported'
+      });
+    } catch (error) {
+      // ticket ถูกบันทึกแล้ว → ห้าม throw ไม่งั้นผู้ใช้จะคิดว่าไม่ได้บันทึก
+      console.error('Photo upload failed after ticket was created:', error);
+      photoUploadError = error.message || 'Photo upload failed.';
+    }
   }
 
-  return fetchRequestById(data.ticket_id);
+  const saved = await fetchRequestById(data.ticket_id);
+  return { ...saved, photoUploadError };
 }
 
 export async function fetchRequestById(ticketId) {

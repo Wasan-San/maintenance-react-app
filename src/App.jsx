@@ -32,11 +32,11 @@ export default function App() {
 
   const permissions = useMemo(() => getPermissions(profile), [profile]);
 
-  const showToast = (message, type = 'success') => {
+    const showToast = (message, type = 'success', duration = 2600) => {
     setToast({ message, type });
-    window.setTimeout(() => setToast(null), 2600);
+    window.setTimeout(() => setToast(null), duration);
   };
-
+  
   useEffect(() => {
     let active = true;
 
