@@ -1,4 +1,4 @@
-import { CATEGORIES } from '../data.js';
+import { CATEGORIES, SPECIAL_STATUSES } from '../data.js';
 import { formatMoney } from '../utils.js';
 
 const CATEGORY_COLORS = [
@@ -19,7 +19,7 @@ export default function Overview({ requests }) {
   ).length;
 
   const holdCancelled = requests.filter(request =>
-    ['Hold', 'Cancelled', 'Invalid Request'].includes(request.status)
+    SPECIAL_STATUSES.includes(request.status)
   ).length;
 
   const inProgress = total - completed - holdCancelled;

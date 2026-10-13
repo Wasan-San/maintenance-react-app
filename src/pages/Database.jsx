@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { ALL_STATUSES, CATEGORIES, NORMAL_STATUSES } from "../data.js";
+import {
+  ALL_STATUSES,
+  CATEGORIES,
+  NORMAL_STATUSES,
+  SPECIAL_STATUSES,
+} from "../data.js";
 import {
   formatDate,
   formatDateTime,
@@ -563,9 +568,11 @@ function RequestModal({
                 })}
               </div>
               <div className="exception-status">
-                <span className="status-pill s-hold">Hold</span>
-                <span className="status-pill s-cancel">Cancelled</span>
-                <span className="status-pill s-cancel">Invalid Request</span>
+                {SPECIAL_STATUSES.map((status) => (
+                  <span className={`status-pill ${statusClass(status)}`} key={status}>
+                    {status}
+                  </span>
+                ))}
               </div>
             </section>
             <section className="detail-section" style={{ marginTop: 12 }}>
