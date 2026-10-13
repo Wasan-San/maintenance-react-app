@@ -216,17 +216,26 @@ export async function updateRequestRecord(request, vendors = [], pendingPhotos =
 
   if (error) throw error;
 
+  let photoUploadError = null;
+
   if (pendingPhotos?.length) {
-    await uploadTicketPhotos({
-      ticketId: data.ticket_id,
-      storeId: data.store_id,
-      photos: pendingPhotos,
-      photoType: 'admin',
-      stage: 'Additional Inspection'
-    });
+    try {
+      await uploadTicketPhotos({
+        ticketId: data.ticket_id,
+        storeId: data.store_id,
+        photos: pendingPhotos,
+        photoType: 'admin',
+        stage: 'Additional Inspection'
+      });
+    } catch (error) {
+      // ticket ถูก update แล้ว → ห้าม throw ไม่งั้นผู้ใช้จะคิดว่าไม่ได้บันทึก
+      console.error('Photo upload failed after ticket was updated:', error);
+      photoUploadError = error.message || 'Photo upload failed.';
+    }
   }
 
-  return fetchRequestById(data.ticket_id);
+  const saved = await fetchRequestById(data.ticket_id);
+  return { ...saved, photoUploadError };
 }
 
 export async function deleteRequestRecord(ticketId) {

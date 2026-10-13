@@ -169,7 +169,15 @@ export default function Database({
       setDraft(saved);
       clearPendingPhotos();
       setSnapshot(makeSnapshot(saved, []));
-      showToast("Changes saved successfully.");
+      if (saved.photoUploadError) {
+        showToast(
+          `Changes saved, but some photos failed to upload. Please add them again. (${saved.photoUploadError})`,
+          "error",
+          8000,
+        );
+      } else {
+        showToast("Changes saved successfully.");
+      }
     } catch (error) {
       console.error("Update request failed:", error);
       showToast(error.message || "Unable to save changes.", "error");
