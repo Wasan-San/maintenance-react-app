@@ -45,8 +45,8 @@ Limitations:
 - Non-status edits are saved in `history` as `{ type: "edit", changes: [...] }`,
   but no UI shows them yet (the status timeline skips them).
 
-Mobile layout overflow (seen on phone, New Request page):
-- Page is wider than the screen and scrolls sideways.
-- Form card is cut off on the right.
-- Top nav items don't wrap ("Operational Sup..." is cut).
-- Topbar has too much empty height.
+Mobile layout:
+- At 320px width the ADMIN role badge overflows ~20px to the right
+  (the large "Maintenance" heading pushes the page-head row).
+- `styles.css` is layered (V1…V10); unconditional rules placed after a media
+  query override it. Add new responsive rules at the end of the file.
