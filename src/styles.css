@@ -1557,3 +1557,30 @@ body::after {
 /* Week 4 — Auth / Roles */
 .login-shell{min-height:100vh;display:grid;place-items:center;padding:28px;position:relative;z-index:2}.login-card{width:min(460px,94vw);padding:30px}.login-wordmark{width:150px;height:auto;margin-bottom:24px}.login-copy h1{margin:10px 0 6px;font-size:1.65rem}.login-copy p{margin:0 0 22px;color:var(--muted);font-size:.86rem}.login-form{display:grid;gap:14px}.login-form label{display:grid;gap:7px;font-size:.76rem;font-weight:700;color:#475467}.login-error{padding:10px 12px;border-radius:10px;background:#fff1f0;color:#b42318;font-size:.78rem;border:1px solid #fecdca}.auth-user{gap:8px}.auth-user-copy{display:flex;flex-direction:column;line-height:1.1}.auth-user-copy small{text-transform:capitalize;color:#98a2b3;font-size:.62rem;margin-top:3px}.logout-btn{padding:7px 10px;font-size:.67rem}.page-head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.role-badge{display:inline-flex;align-items:center;width:max-content;border:1px solid #d0d5dd;border-radius:999px;padding:5px 9px;background:#fff;color:#475467;font-size:.64rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}.role-admin{background:#eef4ff;border-color:#c7d7fe;color:#175cd3}.role-viewer{background:#f4f3ff;border-color:#d9d6fe;color:#5925dc}.role-store{background:#ecfdf3;border-color:#abefc6;color:#067647}.control:disabled,.admin-input:disabled{background:#f6f7f9;color:#98a2b3;cursor:not-allowed}.upload-button{border:1px dashed #b8c3d8;border-radius:12px;padding:14px;background:#fbfcfe}.upload-button:hover{border-color:#7f9fd8;background:#f7faff}
 @media(max-width:760px){.auth-user-copy,.logout-btn{display:none}.page-head-row{align-items:center}.role-badge{font-size:.58rem}}
+
+/* =========================================================
+   V10 · Mobile fixes
+   Unconditional rules earlier in this file override the older
+   mobile media queries, so these must stay at the end.
+   ========================================================= */
+@media(max-width:820px){
+  /* Logo + avatar on row 1, scrollable nav on row 2 */
+  .topbar-inner{gap:4px 12px}
+  .topbar-inner .user{grid-column:2;grid-row:1}
+  .global-nav{grid-row:2;overflow-x:auto;scrollbar-width:none}
+  .global-nav::-webkit-scrollbar{display:none}
+  .global-nav a{padding:8px 0 12px;white-space:nowrap;flex:none}
+
+  /* span 6 created 5 extra implicit columns in the narrower form grid */
+  .form-actions.span-6{grid-column:1/-1}
+}
+
+@media(max-width:580px){
+  .form-actions{flex-wrap:wrap;gap:10px}
+  .form-title{flex-wrap:wrap}
+  .upload-row{grid-template-columns:minmax(0,1fr)!important}
+
+  /* Donut on top, category bars below at full width */
+  .category-layout{grid-template-columns:1fr;justify-items:center}
+  .category-bars{width:100%}
+}
