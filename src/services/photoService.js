@@ -90,7 +90,11 @@ export async function addSignedPhotoUrls(request) {
       .from(BUCKET)
       .createSignedUrl(photo.path, 3600);
 
-    if (error) throw error;
+    if (error) {
+      // รูปเดียวเสีย → แสดงเป็นช่อง "Photo unavailable" แทน ไม่ให้ทั้งแอปโหลดไม่ขึ้น
+      console.warn(`Signed URL failed for ${photo.path}:`, error);
+      return { ...photo, name: photo.path.split('/').pop(), data: null, missing: true };
+    }
 
     return {
       ...photo,

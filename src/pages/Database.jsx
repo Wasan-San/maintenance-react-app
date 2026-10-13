@@ -656,7 +656,27 @@ function PhotoGallery({ photos, openLightbox, compact = false }) {
     return <span className="placeholder">No reported photos.</span>;
   return (
     <div className={`photo-gallery ${compact ? "compact" : ""}`}>
-      {photos.map((photo, index) => (
+      {photos.map((photo, index) => photo.missing ? (
+        <div
+          className="gallery-item"
+          key={`${photo.name}-${index}`}
+          title={photo.name}
+        >
+          <div
+            style={{
+              height: 66,
+              display: "grid",
+              placeItems: "center",
+              background: "#f2f4f7",
+              color: "#98a2b3",
+              fontSize: "0.6rem",
+            }}
+          >
+            Photo unavailable
+          </div>
+          <span>{photo.stage || photo.name}</span>
+        </div>
+      ) : (
         <button
           className="gallery-item photo-view-btn"
           type="button"
