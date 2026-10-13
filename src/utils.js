@@ -21,17 +21,6 @@ export function statusClass(status) {
   return 's-progress';
 }
 
-export function generateWorkCode(reportedDate, requests) {
-  const year = new Date((reportedDate || new Date().toISOString().slice(0, 10)) + 'T00:00:00').getFullYear();
-  const prefix = `MT-${year}-`;
-  const max = requests.reduce((highest, request) => {
-    if (!String(request.workCode || '').startsWith(prefix)) return highest;
-    const n = Number(String(request.workCode).split('-').pop());
-    return Number.isFinite(n) ? Math.max(highest, n) : highest;
-  }, 0);
-  return `${prefix}${String(max + 1).padStart(3, '0')}`;
-}
-
 export function today() {
   const d = new Date();
   const y = d.getFullYear();

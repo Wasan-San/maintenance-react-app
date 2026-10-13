@@ -196,7 +196,6 @@ export default function App() {
 
       {!loading && !loadError && page === 'new' && permissions.canCreate && (
         <NewRequest
-          requests={requests}
           stores={stores}
           profile={profile}
           userEmail={session.user.email}

@@ -68,8 +68,6 @@ export function mapRequestRow(row) {
       stage: photo.stage || '',
       createdAt: photo.created_at || ''
     })),
-    reportedPhotos: [],
-    adminPhotos: [],
     chargeType: row.charge_type || '',
     costCategory: row.cost_category || row.category || '',
     adminNotes: row.admin_notes || '',

@@ -326,7 +326,6 @@ export default function Database({
         </div>
         <div className="pager">
           <span>{filtered.length} rows on this page</span>
-          <div className="pages"></div>
         </div>
       </section>
 
@@ -420,7 +419,6 @@ function RequestModal({
   canDelete,
 }) {
   const currentIndex = NORMAL_STATUSES.indexOf(draft.status);
-  const photos = [...(request.adminPhotos || []), ...pendingPhotos];
   return (
     <div className="js-modal open" aria-hidden="false">
       <div className="modal-backdrop" onClick={requestClose}></div>
