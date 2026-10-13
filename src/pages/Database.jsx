@@ -581,6 +581,7 @@ function RequestModal({
                 photos={[...(request.adminPhotos || []), ...pendingPhotos]}
                 openLightbox={openLightbox}
                 compact
+                emptyText="No admin photos."
               />
               {canEdit && (
                 <div style={{ marginTop: 10 }}>
@@ -656,9 +657,14 @@ function EditSelect({ label, value, onChange, options, first, span = "", disable
     </div>
   );
 }
-function PhotoGallery({ photos, openLightbox, compact = false }) {
+function PhotoGallery({
+  photos,
+  openLightbox,
+  compact = false,
+  emptyText = "No reported photos.",
+}) {
   if (!photos.length)
-    return <span className="placeholder">No reported photos.</span>;
+    return <span className="placeholder">{emptyText}</span>;
   return (
     <div className={`photo-gallery ${compact ? "compact" : ""}`}>
       {photos.map((photo, index) => photo.missing ? (

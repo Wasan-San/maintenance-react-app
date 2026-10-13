@@ -168,7 +168,7 @@ export default function App() {
           <section className="card app-state-card">
             <h2>Unable to load data</h2>
             <p>{loadError}</p>
-            <p>Check the Week 4 Supabase setup, profile row, RLS policies, and environment variables.</p>
+            <p>Please try again. If the problem continues, contact your administrator.</p>
             <button className="btn" type="button" onClick={() => window.location.reload()}>
               Try Again
             </button>
