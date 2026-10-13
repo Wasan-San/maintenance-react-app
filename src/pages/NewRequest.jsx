@@ -117,8 +117,11 @@ export default function NewRequest({ stores, profile, userEmail, onAddRequest, o
       setSubmitting(true);
       const created = await onAddRequest(request);
             if (created.photoUploadError) {
+        const nextStep = profile?.role === 'admin'
+          ? 'Please open the request and add photos again.'
+          : 'Please ask an admin to add the photos.';
         showToast(
-          `${created.workCode} saved, but photos failed to upload. Please open the request and add photos again. (${created.photoUploadError})`,
+          `${created.workCode} saved, but photos failed to upload. ${nextStep} (${created.photoUploadError})`,
           'error',
           8000
         );
