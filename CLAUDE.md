@@ -41,28 +41,9 @@ Supabase Auth (email/password), PostgreSQL with RLS, private Storage bucket
 
 ## Known issues
 
-Dead code / duplication:
-- `generateWorkCode()` in `utils.js` is unused (DB trigger generates codes).
-- `App.jsx` passes `requests` to `NewRequest`, which never uses it.
-- `Database.jsx` `RequestModal`: unused `photos` variable (recomputed later).
-- Empty `<div className="pages">` pager in `Database.jsx`.
-- `['Hold','Cancelled','Invalid Request']` hardcoded in `Overview.jsx` and
-  `Database.jsx` instead of using `SPECIAL_STATUSES` from `data.js`.
-- `mapRequestRow` sets `reportedPhotos`/`adminPhotos` to `[]`, always overwritten.
-- Topbar nav links (Home, Project, Event, ...) point to `#` with no pages yet.
-
-Bugs / risks:
-- `Database.jsx` `saveChanges` hardcodes history `by: "Admin"` instead of the real user.
-- `updateRequestRecord`: admin photo upload failure throws after the ticket was
-  already updated (no try/catch like `createRequestRecord`).
-- `addSignedPhotoUrls` throws if one signed URL fails, breaking the whole data load.
-- `deleteRequestRecord` deletes Storage files before the ticket row.
-- NewRequest photo-failure toast tells store/viewer to "add photos again", but only admin can.
-- `showToast` doesn't clear the previous timeout; a later toast can close early.
-- `pendingPhotos` object URLs in `Database.jsx` are never revoked.
-- `package.json` pins every dependency to `"latest"`.
-- History is only recorded when status changes; edits to cost, contractor,
-  or notes leave no history entry.
+Limitations:
+- Non-status edits are saved in `history` as `{ type: "edit", changes: [...] }`,
+  but no UI shows them yet (the status timeline skips them).
 
 Mobile layout overflow (seen on phone, New Request page):
 - Page is wider than the screen and scrolls sideways.
