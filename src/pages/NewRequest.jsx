@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CATEGORIES } from '../data.js';
 import { today } from '../utils.js';
+import { ClipboardPlusIcon } from '../components/Icons.jsx';
 
 const makeEmptyForm = (email = '') => ({
   reportedDate: today(),
@@ -163,7 +164,7 @@ export default function NewRequest({ stores, profile, userEmail, onAddRequest, o
     <main className="shell form-layout">
       <section className="card form-card">
         <div className="form-title">
-          <div className="form-title-left"><div className="icon-bubble" style={{'--wash':'#edf4ff','--icon':'#2f6fed'}}>▧</div><h2>Create New Request</h2></div>
+          <div className="form-title-left"><div className="icon-bubble" style={{'--wash':'#edf4ff','--icon':'#2f6fed'}}><ClipboardPlusIcon /></div><h2>Create New Request</h2></div>
           <div className="required-note"><span className="req">*</span> Required fields</div>
         </div>
 

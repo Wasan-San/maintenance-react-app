@@ -1594,3 +1594,22 @@ body::after {
 @media(max-width:820px){
   .topbar{padding-top:16px}
 }
+
+/* SVG icons: Overview KPI/cost cards and New Request title share one size */
+.kpi .icon-bubble,
+.form-title .icon-bubble{width:52px;height:52px;flex:none}
+.kpi .icon-bubble svg,
+.form-title .icon-bubble svg{width:26px;height:26px}
+.cost-mini .mini-icon{width:52px;height:52px}
+.cost-mini .mini-icon svg{width:26px;height:26px}
+.form-title .icon-bubble{
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.84),
+    color-mix(in srgb,var(--wash) 55%,white)
+  );
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:
+    0 8px 18px rgba(67,85,128,.06),
+    inset 0 1px 0 rgba(255,255,255,.92);
+}

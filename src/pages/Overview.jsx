@@ -1,5 +1,14 @@
 import { CATEGORIES, SPECIAL_STATUSES } from '../data.js';
 import { formatMoney } from '../utils.js';
+import {
+  BanknoteIcon,
+  CalculatorIcon,
+  CircleCheckIcon,
+  CirclePauseIcon,
+  ClipboardListIcon,
+  ClockIcon,
+  ReceiptTextIcon
+} from '../components/Icons.jsx';
 
 const CATEGORY_COLORS = [
   '#5f93ef',
@@ -63,28 +72,28 @@ export default function Overview({ requests }) {
           value={total}
           wash="#edf4ff"
           icon="#2f6fed"
-          symbol="▧"
+          symbol={<ClipboardListIcon />}
         />
         <Kpi
           label="In Progress"
           value={inProgress}
           wash="#fff3e8"
           icon="#ef7c1b"
-          symbol="◷"
+          symbol={<ClockIcon />}
         />
         <Kpi
           label="Completed"
           value={completed}
           wash="#eaf8f2"
           icon="#15a36a"
-          symbol="✓"
+          symbol={<CircleCheckIcon />}
         />
         <Kpi
           label="Hold / Cancelled"
           value={holdCancelled}
           wash="#fff0f3"
           icon="#e22b3e"
-          symbol="×"
+          symbol={<CirclePauseIcon />}
         />
       </section>
 
@@ -138,16 +147,19 @@ export default function Overview({ requests }) {
           <div className="cost-summary">
             <CostMini
               label="Recorded Cost"
+              symbol={<BanknoteIcon />}
               value={formatMoney(recordedCost)}
               note="Sum of actual cost in tickets"
             />
             <CostMini
               label="Requests With Cost"
+              symbol={<ReceiptTextIcon />}
               value={requestsWithCost}
               note={`${total - requestsWithCost} request(s) still THB 0`}
             />
             <CostMini
               label="Average Cost"
+              symbol={<CalculatorIcon />}
               value={formatMoney(averageCost)}
               note="Average of requests with recorded cost"
             />
@@ -201,14 +213,14 @@ function Kpi({ label, value, wash, icon, symbol }) {
   );
 }
 
-function CostMini({ label, value, note }) {
+function CostMini({ label, value, note, symbol }) {
   return (
     <div className="cost-mini">
       <div
         className="mini-icon"
         style={{ background: '#edf4ff', color: '#2f6fed' }}
       >
-        ฿
+        {symbol}
       </div>
       <label>{label}</label>
       <strong>{value}</strong>
