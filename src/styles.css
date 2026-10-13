@@ -1584,3 +1584,8 @@ body::after {
   .category-layout{grid-template-columns:1fr;justify-items:center}
   .category-bars{width:100%}
 }
+
+/* Logout stays reachable on mobile (name/role remain hidden) */
+@media(max-width:760px){
+  .logout-btn{display:inline-flex;align-items:center;height:32px;padding:0 12px;font-size:.72rem}
+}
