@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Layout from './components/Layout.jsx';
 import Toast from './components/Toast.jsx';
 import Login from './pages/Login.jsx';
@@ -32,9 +32,12 @@ export default function App() {
 
   const permissions = useMemo(() => getPermissions(profile), [profile]);
 
-    const showToast = (message, type = 'success', duration = 2600) => {
+  const toastTimer = useRef(null);
+
+  const showToast = (message, type = 'success', duration = 2600) => {
+    window.clearTimeout(toastTimer.current);
     setToast({ message, type });
-    window.setTimeout(() => setToast(null), duration);
+    toastTimer.current = window.setTimeout(() => setToast(null), duration);
   };
   
   useEffect(() => {
