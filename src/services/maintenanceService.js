@@ -238,18 +238,25 @@ export async function deleteRequestRecord(ticketId) {
   if (photoError) throw photoError;
 
   const paths = (photos || []).map((photo) => photo.storage_path);
+
+  // ลบ ticket ก่อน (ticket_photos ถูก cascade ลบตาม) แล้วค่อยลบไฟล์
+  // ถ้าลบ ticket ไม่สำเร็จ รูปจะยังอยู่ครบ
+  const { data: deleted, error } = await supabase
+    .from('tickets')
+    .delete()
+    .eq('ticket_id', ticketId)
+    .select('ticket_id');
+
+  if (error) throw error;
+  // RLS ไม่ให้ลบจะไม่ error แต่ได้ 0 แถว
+  if (!deleted?.length) throw new Error('Request was not deleted.');
+
   if (paths.length) {
     const { error: storageError } = await supabase.storage
       .from('maintenance-photos')
       .remove(paths);
 
-    if (storageError) throw storageError;
+    // ticket ถูกลบแล้ว → ไฟล์ค้างใน Storage ดีกว่า throw ให้ผู้ใช้คิดว่าลบไม่สำเร็จ
+    if (storageError) console.warn('Photo files were not removed from Storage:', storageError);
   }
-
-  const { error } = await supabase
-    .from('tickets')
-    .delete()
-    .eq('ticket_id', ticketId);
-
-  if (error) throw error;
 }
