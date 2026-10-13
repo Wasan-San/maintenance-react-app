@@ -155,6 +155,25 @@ export default function Database({
 
     if (original && draft.status !== original.status)
       history = [...history, { status: draft.status, date: now, by: currentUserName }];
+
+    // แก้ช่องอื่นที่ไม่ใช่สถานะ → บันทึกเป็น entry แบบ edit (timeline จะข้าม entry นี้)
+    const changes = original
+      ? [
+          ["Contractor", original.contractor || "", draft.contractor || ""],
+          ["Actual Cost", Number(original.actualCost || 0), Number(draft.actualCost || 0)],
+          ["Charge Type", original.chargeType || "", draft.chargeType || ""],
+          ["Cost Category", original.costCategory || "", draft.costCategory || ""],
+          ["Admin Notes", (original.adminNotes || "").trim(), (draft.adminNotes || "").trim()],
+        ]
+          .filter(([, before, after]) => before !== after)
+          .map(([label]) => label)
+      : [];
+    if (changes.length)
+      history = [
+        ...history,
+        { type: "edit", status: draft.status, date: now, by: currentUserName, changes },
+      ];
+
     const updated = {
       ...original,
       ...draft,
@@ -559,7 +578,7 @@ function RequestModal({
                 {NORMAL_STATUSES.map((status, index) => {
                   const h = [...(request.history || [])]
                     .reverse()
-                    .find((x) => x.status === status);
+                    .find((x) => x.type !== "edit" && x.status === status);
                   const done = currentIndex >= 0 && index <= currentIndex;
                   return (
                     <div className={`step ${done ? "done" : ""}`} key={status}>
