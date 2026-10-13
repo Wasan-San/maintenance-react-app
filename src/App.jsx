@@ -214,6 +214,7 @@ export default function App() {
           onDeleteRequest={deleteRequest}
           canEdit={permissions.canEdit}
           canDelete={permissions.canDelete}
+          currentUserName={profile?.displayName || session.user.email || 'User'}
           showToast={showToast}
         />
       )}

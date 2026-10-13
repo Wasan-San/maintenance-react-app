@@ -14,6 +14,7 @@ export default function Database({
   onDeleteRequest,
   canEdit,
   canDelete,
+  currentUserName,
   showToast,
 }) {
   const [search, setSearch] = useState("");
@@ -141,8 +142,9 @@ export default function Database({
     const now = new Date().toISOString();
     const original = requests.find((r) => r.ticketId === draft.ticketId);
     let history = [...(original?.history || [])];
+
     if (original && draft.status !== original.status)
-      history = [...history, { status: draft.status, date: now, by: "Admin" }];
+      history = [...history, { status: draft.status, date: now, by: currentUserName }];
     const updated = {
       ...original,
       ...draft,
