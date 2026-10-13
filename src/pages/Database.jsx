@@ -89,10 +89,15 @@ export default function Database({
     setConfirmClose(false);
   };
 
+  const clearPendingPhotos = () => {
+    pendingPhotos.forEach((photo) => URL.revokeObjectURL(photo.data));
+    setPendingPhotos([]);
+  };
+
   const closeModal = () => {
     setSelectedCode(null);
     setDraft(null);
-    setPendingPhotos([]);
+    clearPendingPhotos();
     setConfirmClose(false);
   };
 
@@ -162,7 +167,7 @@ export default function Database({
     try {
       const saved = await onUpdateRequest(updated, pendingPhotos);
       setDraft(saved);
-      setPendingPhotos([]);
+      clearPendingPhotos();
       setSnapshot(makeSnapshot(saved, []));
       showToast("Changes saved successfully.");
     } catch (error) {
